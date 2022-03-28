@@ -29,3 +29,7 @@
 - Ordenar os resultados com a opção "order"
 - Agrupar registros com "group"
 - Passar comandos do SQL dentro do Sequelize com Sequelize.literal()
+  <br/>
+- Criar métodos para atualizar mais de uma tabela
+- Adicionar transações às operações de banco via Sequelize
+- Interpretar avisos de versionamento e fazer correções
