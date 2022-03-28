@@ -3,16 +3,21 @@ const PessoaController = require('../controller/PessoaController')
 
 const router = Router()
 
-router.get('/pessoas/todos', PessoaController.pegaTodasPessoas)
-router.get('/pessoas', PessoaController.pegaPessoasAtivas)
-router.get('/pessoas/:id', PessoaController.pegaUmaPessoa)
-router.get(
-  '/pessoas/:estudanteId/matricula/:matriculaId',
-  PessoaController.pegaUmaMatricula
-)
-router.get('/pessoas/:estudanteId/matricula', PessoaController.pegaMatriculas)
-router.post('/pessoas', PessoaController.criaPessoa)
 router
+  .get('/pessoas/todos', PessoaController.pegaTodasPessoas)
+  .get('/pessoas', PessoaController.pegaPessoasAtivas)
+  .get('/pessoas/:id', PessoaController.pegaUmaPessoa)
+  .get(
+    '/pessoas/:estudanteId/matricula/:matriculaId',
+    PessoaController.pegaUmaMatricula
+  )
+  .get('/pessoas/:estudanteId/matricula', PessoaController.pegaMatriculas)
+  .get(
+    '/pessoas/matricula/:turmaId/confirmadas',
+    PessoaController.pegaMatriculasPorTurma
+  )
+  .post('/pessoas', PessoaController.criaPessoa)
+
   .post('/pessoas/:id/restaura', PessoaController.restauraPessoa)
   .post('/pessoas/:estudanteId/matricula', PessoaController.criaMatricula)
   .post(
@@ -20,18 +25,16 @@ router
     PessoaController.restauraMatricula
   )
 
-router.put('/pessoas/:id', PessoaController.atualizaPessoa)
-router.delete('/pessoas/:id', PessoaController.deletaPessoa)
+  .put('/pessoas/:id', PessoaController.atualizaPessoa)
+  .delete('/pessoas/:id', PessoaController.deletaPessoa)
 
-router
-
-router.put(
-  '/pessoas/:estudanteId/matricula/:matriculaId',
-  PessoaController.atualizaMatricula
-)
-router.delete(
-  '/pessoas/:estudanteId/matricula/:matriculaId',
-  PessoaController.deletaMatricula
-)
+  .put(
+    '/pessoas/:estudanteId/matricula/:matriculaId',
+    PessoaController.atualizaMatricula
+  )
+  .delete(
+    '/pessoas/:estudanteId/matricula/:matriculaId',
+    PessoaController.deletaMatricula
+  )
 
 module.exports = router
