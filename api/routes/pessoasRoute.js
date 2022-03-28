@@ -16,6 +16,7 @@ router
     '/pessoas/matricula/:turmaId/confirmadas',
     PessoaController.pegaMatriculasPorTurma
   )
+  .get('/pessoas/matricula/lotada', PessoaController.pegaTurmaLotada)
   .post('/pessoas', PessoaController.criaPessoa)
 
   .post('/pessoas/:id/restaura', PessoaController.restauraPessoa)
