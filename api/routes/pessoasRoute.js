@@ -25,6 +25,7 @@ router
     '/pessoas/:estudanteId/matricula/:matriculaId/restaura',
     PessoaController.restauraMatricula
   )
+  .post('/pessoas/:estudanteId/cancela', PessoaController.cancelaPessoa)
 
   .put('/pessoas/:id', PessoaController.atualizaPessoa)
   .delete('/pessoas/:id', PessoaController.deletaPessoa)
