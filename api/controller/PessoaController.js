@@ -23,10 +23,8 @@ class PessoaController {
   static async pegaUmaPessoa(req, res) {
     const { id } = req.params
     try {
-      const umaPessoa = await database.Pessoas.findOne({
-        where: {
-          id: Number(id)
-        }
+      const umaPessoa = await pessoasService.pegaUmRegistro({
+        id
       })
       return res.status(200).json(umaPessoa)
     } catch (error) {
@@ -37,7 +35,7 @@ class PessoaController {
   static async criaPessoa(req, res) {
     const novaPessoa = req.body
     try {
-      const novaPessoaCriada = await database.Pessoas.create(novaPessoa)
+      const novaPessoaCriada = await pessoasService.criaUmRegistro(novaPessoa)
       return res.status(201).json(novaPessoaCriada)
     } catch (error) {
       return res.status(500).json({ error: error.message })
@@ -48,15 +46,9 @@ class PessoaController {
     const { id } = req.params
     const novasInfos = req.body
     try {
-      await database.Pessoas.update(novasInfos, {
-        where: {
-          id: Number(id)
-        }
-      })
-      const pessoaAtualizada = await database.Pessoas.findOne({
-        where: {
-          id: Number(id)
-        }
+      await pessoasService.atualizaRegistro(novasInfos, Number(id))
+      const pessoaAtualizada = await pessoasService.pegaUmRegistro({
+        id
       })
       return res.status(200).json(pessoaAtualizada)
     } catch (error) {
@@ -67,11 +59,7 @@ class PessoaController {
   static async deletaPessoa(req, res) {
     const { id } = req.params
     try {
-      await database.Pessoas.destroy({
-        where: {
-          id: Number(id)
-        }
-      })
+      await pessoasService.apagaRegistro(Number(id))
       return res.status(200).json({ message: `id ${id} deletado com sucesso` })
     } catch (error) {
       return res.status(500).json(error.message)
@@ -81,11 +69,7 @@ class PessoaController {
   static async restauraPessoa(req, res) {
     const { id } = req.params
     try {
-      await database.Pessoas.restore({
-        where: {
-          id: Number(id)
-        }
-      })
+      await pessoasService.restauraRegistro(Number(id))
       return res
         .status(200)
         .json({ message: `id ${id} restaurado com sucesso` })

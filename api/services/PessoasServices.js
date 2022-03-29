@@ -7,6 +7,10 @@ class PessoasServices extends Services {
     this.matriculas = new Services('Matriculas')
   }
 
+  async criaUmRegistro(dados) {
+    return database[this.nomeDoModelo].create(dados)
+  }
+
   async pegaRegistrosAtivos(where = {}) {
     return database[this.nomeDoModelo].findAll({ where: { ...where } })
   }
@@ -15,6 +19,18 @@ class PessoasServices extends Services {
     return database[this.nomeDoModelo]
       .scope('todos')
       .findAll({ where: { ...where } })
+  }
+
+  async pegaUmRegistro(where = {}) {
+    return database[this.nomeDoModelo].findOne({ where: { ...where } })
+  }
+
+  async atualizaRegistro(dadosAtualizados, id) {
+    return database.sequelize.transaction(async transacao => {
+      await super.atualizaRegistro(dadosAtualizados, id, {
+        transaction: transacao
+      })
+    })
   }
 
   async cancelaPessoaEMatriculas(estudanteId) {
@@ -30,6 +46,14 @@ class PessoasServices extends Services {
         { transaction: transacao }
       )
     })
+  }
+
+  async apagaRegistro(id) {
+    return database[this.nomeDoModelo].destroy({ where: { id: id } })
+  }
+
+  async restauraRegistro(id) {
+    return database[this.nomeDoModelo].restore({ where: { id: id } })
   }
 }
 
