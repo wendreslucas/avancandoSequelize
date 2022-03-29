@@ -2,6 +2,16 @@ const { PessoasServices } = require('../services')
 const pessoasService = new PessoasServices()
 
 class PessoaController {
+  static async criaPessoa(req, res) {
+    const novaPessoa = req.body
+    try {
+      const novaPessoaCriada = await pessoasService.criaUmRegistro(novaPessoa)
+      return res.status(201).json(novaPessoaCriada)
+    } catch (error) {
+      return res.status(500).json({ error: error.message })
+    }
+  }
+
   static async pegaPessoasAtivas(req, res) {
     try {
       const pessoasAtivas = await pessoasService.pegaRegistrosAtivos()
@@ -27,16 +37,6 @@ class PessoaController {
         id
       })
       return res.status(200).json(umaPessoa)
-    } catch (error) {
-      return res.status(500).json({ error: error.message })
-    }
-  }
-
-  static async criaPessoa(req, res) {
-    const novaPessoa = req.body
-    try {
-      const novaPessoaCriada = await pessoasService.criaUmRegistro(novaPessoa)
-      return res.status(201).json(novaPessoaCriada)
     } catch (error) {
       return res.status(500).json({ error: error.message })
     }
